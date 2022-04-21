@@ -51,7 +51,6 @@ public class TestWithFiles {
                 }
                 if (entry.getName().equals(NameCSV)) {
                     try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-
                         List<String[]> content = reader.readAll();
                         org.assertj.core.api.Assertions.assertThat(content).contains(
                                 new String[]{"Name", "Surname"},
