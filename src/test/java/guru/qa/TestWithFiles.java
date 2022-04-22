@@ -20,9 +20,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestWithFiles {
 
-    String NameXLSX = "SimpleXLSX.xlsx";
-    String NamePDF = "SimplePDF.pdf";
-    String NameCSV = "SimpleCSV.csv";
+    String nameXLSX = "SimpleXLSX.xlsx";
+    String namePDF = "SimplePDF.pdf";
+    String nameCSV = "SimpleCSV.csv";
 
      @Test
     void zipParsingTest() throws Exception {
@@ -33,13 +33,13 @@ public class TestWithFiles {
         ZipEntry entry;
         while ((entry = is.getNextEntry()) != null) {
             try (InputStream inputStream = zf.getInputStream(entry)) {
-                if (entry.getName().equals(NamePDF)) {
+                if (entry.getName().equals(namePDF)) {
                     PDF pdf = new PDF(inputStream);
                     Assertions.assertEquals(2, pdf.numberOfPages);
                     assertThat(pdf, new ContainsExactText("A Simple PDF File"));
                     System.out.println("PDF файл " + entry.getName() + " успешно проверен");
                 }
-                if (entry.getName().equals(NameXLSX)) {
+                if (entry.getName().equals(nameXLSX)) {
                     XLS xls = new XLS(inputStream);
                     String stringCellValue = xls.excel
                             .getSheetAt(0)
@@ -49,7 +49,7 @@ public class TestWithFiles {
                     org.assertj.core.api.Assertions.assertThat(stringCellValue).contains("Honda");
                     System.out.println("XLSX файл " + entry.getName() + " успешно проверен");
                 }
-                if (entry.getName().equals(NameCSV)) {
+                if (entry.getName().equals(nameCSV)) {
                     try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                         List<String[]> content = reader.readAll();
                         org.assertj.core.api.Assertions.assertThat(content).contains(
